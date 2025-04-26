@@ -1,26 +1,39 @@
 # White Blood Cell Classification
 
 ## Introduction/Background
-White blood cells serve as indicators of several diseases, which pathologists examine using blood smears. Traditionally, this process relies on the pathologist's visual inspection of microscopic images to manually detect, count, and classify blood cells. Our goal is to automate this labor-intensive task by being able to predict different types of normal peripheral blood cells.
+White blood cells (leukocytes) are critical components of the immune system, defending the body against infections and diseases. Medical professionals use blood smears to examine the morphology of white blood cells and obtain differential counts. This information is essential for diagnosing a wide range of conditions including infections, inflammatory disorders, leukemia, and immune system dysfunctions. Pathologists traditionally examine blood cells through visual inspection of blood smears using microscopes, manually identifying and classifying different types of white blood cells based on their morphological characteristics.
+
+This traditional manual approach, while effective, is labor-intensive, time-consuming, and subject to variability from observer to observer, which can affect diagnostic accuracy and consistency. The increasing demand for hematological analyses in both routine screenings and specialized diagnostics has created a push for more efficient and standardized methodologies. Our goal is to automate this labor-intensive task by developing a system capable of accurately predicting different types of normal peripheral blood cells, thereby improving diagnostic efficiency and reducing the workload for healthcare professionals.
 
 ## Literature Review
 Studies have explored machine learning techniques for medical image classification:
 - Kandel, Castelli, and Popovič developed a convolutional neural network (CNN) to classify histopathology images, comparing six different optimizers and finding that adaptive ones worked best [1].
 - Khan et al. used a CNN with a dual-attention network to detect white blood cells in blood smears, improving accuracy with a generative model [2].
+- Bain established foundational principles for diagnosis from blood smears, emphasizing the importance of systematic morphological assessment and its clinical implications [3].
+- Nazlibilek et al. investigated automatic segmentation and classification of white blood cells using image processing techniques, demonstrating early successes in computational approaches to cell identification [4].
+- Hegde et al. developed algorithms specifically for white blood cell classification with a focus on acute lymphoblastic leukemia detection, showing the potential clinical applications of these technologies [5].
+- Aksoy developed an innovative hybrid model for automatic detection of white blood cells in clinical laboratories, which our project draws inspiration from [6].
 
 ## Dataset
-Our dataset consists of normal peripheral blood cell images taken from healthy individuals at the Hospital Clinic of Barcelona. The dataset is available at: [Kaggle](https://www.kaggle.com/datasets/unclesamulus/blood-cells-image-dataset/data).
+Our dataset consists of normal peripheral blood cell images taken from healthy individuals at the Hospital Clinic of Barcelona. The dataset contains a total of 17,092 images of individual normal cells, which were acquired using the analyzer CellaVision DM96 in the Core Laboratory at the Hospital Clinic of Barcelona. The dataset is available at: [Kaggle](https://www.kaggle.com/datasets/unclesamulus/blood-cells-image-dataset/data).
+
+The dataset is organized in the following eight groups: neutrophils, eosinophils, basophils, lymphocytes, monocytes, immature granulocytes (promyelocytes, myelocytes, and metamyelocytes), erythroblasts and platelets (thrombocytes). The size of the images is 360 x 363 pixels, in format JPG, and they were annotated by expert clinical pathologists. The images were captured from individuals without infection, hematologic or oncologic disease and free of any pharmacologic treatment at the moment of blood collection.
+
+![White Blood Cell Types](/supplementary_images/blood-cell-chart.png)
+*Figure 1: Examples of the eight different white blood cell types in our dataset.*
+
+This high-quality labelled dataset may be used to train and test machine learning and deep learning models to recognize different types of normal peripheral blood cells. To our knowledge, this is the first publicly available set with large numbers of normal peripheral blood cells, so that it is expected to be a canonical dataset for model benchmarking.
 
 ## Problem Statement
-Manual inspection of White Blood Cells (WBCs) in blood smears is labor-intensive, subjective, and prone to human error.
+Manual inspection of White Blood Cells (WBCs) in blood smears is labor-intensive, subjective, and prone to human error. This traditional approach requires pathologists to visually examine hundreds of cells under a microscope, a process that typically takes 15-30 minutes per sample and demands sustained concentration to ensure accuracy. The subjective nature of visual assessment leads to inter-observer variability, with studies reporting disagreement rates of up to 30% among pathologists when classifying certain blood cell types. Furthermore, the growing volume of hematological tests in clinical settings has created a bottleneck in laboratory workflows, delaying diagnosis and treatment decisions. These challenges are particularly pronounced in resource-limited settings where expert pathologists may be scarce, potentially compromising patient care due to delayed or inaccurate cell differential counts.
 
 ## Motivation
-An automated system can improve accuracy, efficiency, and consistency in white blood cell classification, aiding in early cancer detection and reducing pathologists' workload.
+An automated system can improve accuracy, efficiency, and consistency in white blood cell classification, aiding in early cancer detection and reducing pathologists' workload. By leveraging machine learning techniques, a system could analyze thousands of cells in minutes rather than hours, enabling faster turnaround times for critical diagnostic tests. Standardized classification algorithms would eliminate observer variability, ensuring consistent results regardless of operator expertise or fatigue. This consistency is particularly valuable for monitoring disease progression and treatment response over time. Furthermore, automation allows pathologists to focus their expertise on challenging cases that require human judgment, optimizing the allocation of specialized human resources. Early and accurate identification of abnormal white blood cell patterns can facilitate prompt intervention in conditions like leukemia, where early detection significantly improves prognosis. Additionally, the digital nature of automated systems creates opportunities for telemedicine applications, extending high-quality hematological diagnostics to underserved regions through remote analysis capabilities.
 
 ## Methods
 The data is divided into training and testing sets with an 80-20 split to avoid model overfitting. Each set is further split into features and labels for supervised learning.
 
-### Method I - Supervised Learning (CNN) [3] - COMPLETED
+### Method I - Supervised Learning (CNN) [7] - COMPLETED
 - Data is resized using bilinear interpolation to match the shape needed for the neural network
 - Normalize data to ensure that all the images are within [0,1] range to help with consistency when comparing data in the model
 - Split dataset into testing(80%), validation(10%), and training(10%) data 
@@ -31,7 +44,7 @@ The data is divided into training and testing sets with an 80-20 split to avoid 
      - Good at capturing high level patterns like shapes and structures which is an important feature when distinguishing between white blood cells
 
 
-### Method II - Supervised Learning (SVM) [4] - COMPLETED
+### Method II - Supervised Learning (SVM) [8] - COMPLETED
 - Resize images and flatten them into a 1-D array.
 - Normalize image pixels.
 - Extract shape features using a histogram of oriented gradients (HOG) and color features using L*a*b color space.
@@ -40,7 +53,7 @@ The data is divided into training and testing sets with an 80-20 split to avoid 
 - Achieved 43.14% accuracy on the test set, indicating moderate performance.
 - Performance analysis through precision-recall and ROC curves shows variability in classification quality across different cell types.
 
-### Method III - Supervised Learning (Random Forest) [5] - COMPLETED
+### Method III - Supervised Learning (Random Forest) [9] - COMPLETED
 - Uses the same preprocessing and feature extraction steps as Method II.
 - Features are fed into a Random Forest Classifier.
 - Random Forest builds multiple decision trees and outputs the majority class.
@@ -240,6 +253,10 @@ Contains all source code for implemented models:
 - `random_forest.py` – Random Forest implementation  
 - `svm.py` – Support Vector Machine implementation  
 
+`/supplementary_images/`  
+Contains additional images for documentation:
+- `blood-cell-chart.png` – Visual representation of the different blood cell types in our dataset
+
 `README.md`  
 - Project overview and documentation
 
@@ -252,8 +269,16 @@ Contains all source code for implemented models:
 
 [2] S. Khan, M. Sajjad, N. Abbas, J. Escorcia-Gutierrez, M. Gamarra, and K. Muhammad, "Efficient leukocytes detection and classification in microscopic blood images using convolutional neural network coupled with a dual attention network," *Comput. Biol. Med.*, vol. 174, p. 108146, 2024, doi: 10.1016/j.compbiomed.2024.108146.
 
-[3] "How to preprocess and train a CNN (step-by-step)," Kaggle. January 18, 2021. [Kaggle Link](https://www.kaggle.com/code/vesuvius13/how-to-preprocess-and-train-a-cnn-step-by-step).
+[3] B. J. Bain, "Diagnosis from the blood smear," *New England Journal of Medicine*, vol. 353, no. 5, pp. 498-507, 2005.
 
-[4] Basthikodi M, Chaithrashree M, Ahamed Shafeeq BM, Gurpur AP. "Enhancing multiclass brain tumor diagnosis using SVM and innovative feature extraction techniques." *Scientific Reports*, 2024;14(1). doi:10.1038/s41598-024-77243-7.
+[4] S. Nazlibilek, D. Karacor, T. Ercan, M. H. Sazli, O. Kalender, and Y. Ege, "Automatic segmentation, counting, size determination and classification of white blood cells," *Measurement*, vol. 55, pp. 58-65, 2014.
 
-[5] "RandomForestClassifier." Scikit-learn. Accessed February 19, 2025. [Scikit-learn Link](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html).
+[5] R. B. Hegde, K. Prasad, H. Hebbar, and B. M. K. Singh, "Development of a robust algorithm for classification of white blood cells and acute lymphoblastic leukemia detection," *International Journal of Medical Engineering and Informatics*, vol. 10, no. 3, pp. 191-204, 2018.
+
+[6] A. Aksoy, "An Innovative Hybrid Model for Automatic Detection of White Blood Cells in Clinical Laboratories," *Diagnostics* 2024, 14, 2093. https://doi.org/10.3390/diagnostics14182093
+
+[7] "How to preprocess and train a CNN (step-by-step)," Kaggle. January 18, 2021. [Kaggle Link](https://www.kaggle.com/code/vesuvius13/how-to-preprocess-and-train-a-cnn-step-by-step).
+
+[8] Basthikodi M, Chaithrashree M, Ahamed Shafeeq BM, Gurpur AP. "Enhancing multiclass brain tumor diagnosis using SVM and innovative feature extraction techniques." *Scientific Reports*, 2024;14(1). doi:10.1038/s41598-024-77243-7.
+
+[9] "RandomForestClassifier." Scikit-learn. Accessed February 19, 2025. [Scikit-learn Link](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html).
