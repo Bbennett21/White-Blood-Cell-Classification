@@ -19,7 +19,7 @@ Our dataset consists of normal peripheral blood cell images taken from healthy i
 
 The dataset is organized in the following eight groups: neutrophils, eosinophils, basophils, lymphocytes, monocytes, immature granulocytes (promyelocytes, myelocytes, and metamyelocytes), erythroblasts and platelets (thrombocytes). The size of the images is 360 x 363 pixels, in format JPG, and they were annotated by expert clinical pathologists. The images were captured from individuals without infection, hematologic or oncologic disease and free of any pharmacologic treatment at the moment of blood collection.
 
-![White Blood Cell Types](/supplementary_images/blood-cell-chart.png)
+![White Blood Cell Types](/supplementary%20images/blood-cell-chart.png)
 *Figure 1: Examples of the eight different white blood cell types in our dataset.*
 
 This high-quality labelled dataset may be used to train and test machine learning and deep learning models to recognize different types of normal peripheral blood cells. To our knowledge, this is the first publicly available set with large numbers of normal peripheral blood cells, so that it is expected to be a canonical dataset for model benchmarking.
