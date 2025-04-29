@@ -95,7 +95,7 @@ history = model.fit(
         ),
         # Save the model with the best perfromance 
         tf.keras.callbacks.ModelCheckpoint(
-            filepath='best_model.h5',
+            filepath='best_model.keras',
             monitor='val_accuracy',
             save_best_only=True
         )
@@ -185,7 +185,3 @@ plt.show()
 # Print classification report
 print("Classification Report:")
 print(classification_report(y_true, y_pred, target_names=dataset.class_names))
-
-# Save the model
-model.save('blood_cell_classifier.keras')
-print("Model saved as 'blood_cell_classifier.h5'")
